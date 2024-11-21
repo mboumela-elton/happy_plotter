@@ -211,6 +211,7 @@ void TIM4_IRQHandler(void) {
 	/* USER CODE END TIM4_IRQn 0 */
 	HAL_TIM_IRQHandler(&htim4);
 	/* USER CODE BEGIN TIM4_IRQn 1 */
+	ITM_Port32(31) = 0;
 	float A = 1000.0;
 	float B = 500.0;
 	float Fa = 200.0;
@@ -219,13 +220,17 @@ void TIM4_IRQHandler(void) {
 	float ts = (float) t / 1000000.0;
 	int a = (int) A * sin(2.0 * M_PI * Fa * ts);
 	int b = (int) B * cos(2.0 * M_PI * Fb * ts);
+	ITM_Port32(31) = 1;
 	if (sampleCount < 100) {
+		SERIAL_SendInt(t);
+		SERIAL_SendTAB();
 		SERIAL_SendInt(a);
 		SERIAL_SendTAB();
 		SERIAL_SendInt(b);
 		SERIAL_SendNL();
-		ITM_Port32(31) = sampleCount;
+
 	}
+
 	sampleCount++;
 	/* USER CODE END TIM4_IRQn 1 */
 }
