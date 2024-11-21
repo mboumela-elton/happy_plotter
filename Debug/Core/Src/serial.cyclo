@@ -1,0 +1,7 @@
+../Core/Src/serial.c:21:6:SERIAL_Init	1
+../Core/Src/serial.c:25:6:SERIAL_SendCharBuf	2
+../Core/Src/serial.c:32:6:SERIAL_SendInt	2
+../Core/Src/serial.c:39:6:SERIAL_SendFloat	2
+../Core/Src/serial.c:48:6:SERIAL_SendNL	1
+../Core/Src/serial.c:55:6:SERIAL_SendTAB	1
+../Core/Src/serial.c:61:6:SERIAL_SendToPlot	2

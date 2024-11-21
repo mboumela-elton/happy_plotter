@@ -1,0 +1,7 @@
+../Core/Src/serial.c:21:6:SERIAL_Init	16	static
+../Core/Src/serial.c:25:6:SERIAL_SendCharBuf	24	static
+../Core/Src/serial.c:32:6:SERIAL_SendInt	24	static
+../Core/Src/serial.c:39:6:SERIAL_SendFloat	24	static
+../Core/Src/serial.c:48:6:SERIAL_SendNL	8	static
+../Core/Src/serial.c:55:6:SERIAL_SendTAB	8	static
+../Core/Src/serial.c:61:6:SERIAL_SendToPlot	32	static
