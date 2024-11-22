@@ -60,6 +60,9 @@ void SERIAL_SendTAB();
 /* External variables --------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
+
+extern ADC_HandleTypeDef hadc1;
+extern ADC_HandleTypeDef hadc2;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -211,27 +214,42 @@ void TIM4_IRQHandler(void) {
 	/* USER CODE END TIM4_IRQn 0 */
 	HAL_TIM_IRQHandler(&htim4);
 	/* USER CODE BEGIN TIM4_IRQn 1 */
-	ITM_Port32(31) = 0;
-	float A = 1000.0;
-	float B = 500.0;
-	float Fa = 200.0;
-	float Fb = 500.0;
-	int t = TIM5->CNT;
-	float ts = (float) t / 1000000.0;
-	int a = (int) A * sin(2.0 * M_PI * Fa * ts);
-	int b = (int) B * cos(2.0 * M_PI * Fb * ts);
-	ITM_Port32(31) = 1;
-	if (sampleCount < 100) {
-		SERIAL_SendInt(t);
-		SERIAL_SendTAB();
-		SERIAL_SendInt(a);
-		SERIAL_SendTAB();
-		SERIAL_SendInt(b);
-		SERIAL_SendNL();
 
-	}
+	// ADC1
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+	uint32_t value1 = HAL_ADC_GetValue(&hadc1);
+	SERIAL_SendInt(value1);
+	SERIAL_SendNL();
 
-	sampleCount++;
+	// ADC2
+	HAL_ADC_Start(&hadc2);
+	HAL_ADC_PollForConversion(&hadc2, HAL_MAX_DELAY);
+	uint32_t value2 = HAL_ADC_GetValue(&hadc2);
+	SERIAL_SendInt(value2);
+	SERIAL_SendNL();
+
+//	float A = 1000.0;
+//	float B = 500.0;
+//	float Fa = 200.0;
+//	float Fb = 500.0;
+//	int t = TIM5->CNT;
+//	float ts = (float) t / 1000000.0;
+//	int a = (int) A * sin(2.0 * M_PI * Fa * ts);
+//	int b = (int) B * cos(2.0 * M_PI * Fb * ts);
+//
+//	if (sampleCount < 100) {
+//		SERIAL_SendInt(t);
+//		SERIAL_SendTAB();
+//		SERIAL_SendInt(a);
+//		SERIAL_SendTAB();
+//		SERIAL_SendInt(b);
+//		SERIAL_SendNL();
+//		ITM_Port32(31) = 0;
+//
+//		sampleCount++;
+//	}
+
 	/* USER CODE END TIM4_IRQn 1 */
 }
 
