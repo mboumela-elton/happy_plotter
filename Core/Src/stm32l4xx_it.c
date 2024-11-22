@@ -33,6 +33,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define ITM_Port32(n) (*((volatile unsigned long *)(0xE0000000+4*n)))
+#define N 100
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -43,8 +44,8 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 static int sampleCount = 0; // Compteur d'échantillons
-int tabSin[100];
-int tabCos[100];
+int tabSin[N];
+int tabCos[N];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -239,15 +240,15 @@ void TIM4_IRQHandler(void)
 	if(sampleCount == 0) {
 
 	}
-	if (sampleCount < 100) {
+	if (sampleCount < N) {
 		tabSin[sampleCount] = a;
 		tabCos[sampleCount] = b;
-	} else if (sampleCount < 200) {
+	} else if (sampleCount < 2*N) {
 		SERIAL_SendInt(t);
 		SERIAL_SendTAB();
-		SERIAL_SendInt(tabSin[sampleCount-100]);
+		SERIAL_SendInt(tabSin[sampleCount-N]);
 		SERIAL_SendTAB();
-		SERIAL_SendInt(tabCos[sampleCount-100]);
+		SERIAL_SendInt(tabCos[sampleCount-N]);
 		SERIAL_SendNL();
 		ITM_Port32(31) = 0;
 	}
