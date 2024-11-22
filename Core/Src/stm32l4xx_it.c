@@ -213,8 +213,8 @@ void TIM4_IRQHandler(void) {
 	/* USER CODE BEGIN TIM4_IRQn 1 */
 	float A = 1000.0;
 	float B = 500.0;
-	float Fa = 200.0;
-	float Fb = 500.0;
+	float Fa = 20.0;
+	float Fb = 50.0;
 	int t = TIM5->CNT;
 	float ts = (float) t / 1000000.0;
 	int a = (int) A * sin(2.0 * M_PI * Fa * ts);
